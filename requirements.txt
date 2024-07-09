@@ -1,0 +1,6 @@
+speechrecognition
+pyttsx3
+pyaudio
+transformers
+opencv-python
+pillow
