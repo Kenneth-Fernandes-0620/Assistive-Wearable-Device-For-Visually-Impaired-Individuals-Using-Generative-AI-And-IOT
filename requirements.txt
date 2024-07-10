@@ -4,3 +4,4 @@ pyaudio
 transformers
 opencv-python
 pillow
+torch

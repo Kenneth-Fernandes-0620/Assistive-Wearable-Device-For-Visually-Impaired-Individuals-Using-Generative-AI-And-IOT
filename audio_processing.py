@@ -25,7 +25,7 @@ def SpeechToText() -> str:
         with sr.Microphone() as source:
             print("Listening...")
             r.adjust_for_ambient_noise(source, duration=0.5)
-            # FIX: below line throws an error if only silence is detected for 3 seconds
+           
             audio: sr.AudioData = r.listen(source, timeout=3, phrase_time_limit=5)
             text: str = r.recognize_google(audio).lower()
             return text
@@ -35,8 +35,12 @@ def SpeechToText() -> str:
     except sr.RequestError as e:
         print(f"Could not request results; {e}")
         return None
+    except sr.WaitTimeoutError:
+        print("Listening timed out while waiting for phrase to start")
+        return None
 
 if __name__ == "__main__":
+    audio_load()
     while True:
         result = SpeechToText()
         if(result != None):
