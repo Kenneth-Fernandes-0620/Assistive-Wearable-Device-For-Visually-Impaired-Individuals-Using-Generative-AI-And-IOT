@@ -4,7 +4,7 @@ from queue import Queue
 from cv2.typing import MatLike
 from typing import List
 
-from audio_processing import SpeechToText, audio_load
+from audio_processing import SpeechToText, audio_load, SpeakText
 from image_processing import get_image_from_webcam, model_load, image_captioning
 from util import measure_time
 
@@ -45,6 +45,7 @@ def image_processing_worker():
                     print(f"Function result: {result}")
                     print(f"Time taken: {time_taken:.4f} seconds")
                     print(f"End Time: {time.time()}")
+                    SpeakText(result)
                 elif message == commands[1] or message == commands[2]:                    
                     print("Sending SOS signal...")
                     raise Exception("Unimplemented command: SOS or help")
