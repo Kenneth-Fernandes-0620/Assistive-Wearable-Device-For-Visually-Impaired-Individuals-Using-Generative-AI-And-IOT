@@ -5,17 +5,23 @@ import pyttsx3
 r: sr.Recognizer = None
 engine: pyttsx3.engine.Engine = None
 
-def audio_load():
+def TTSEngine():
     global r, engine
     r = sr.Recognizer()
     engine = pyttsx3.init()
 
 # TODO: Add Documentation
 def SpeakText(command: str):
+    print("speaking the text, ",command)
+    engine.say(command)
+
+
+# TODO: Add Documentation
+def startTTSEngine():
     if(engine == None):
         raise Exception("Text-to-speech engine not loaded, call audio_load() first.")
-    engine.say(command)
-    engine.runAndWait()
+    engine.startLoop()
+
 
 # TODO: Add Documentation
 def SpeechToText() -> str:
@@ -40,7 +46,7 @@ def SpeechToText() -> str:
         return None
 
 if __name__ == "__main__":
-    audio_load()
+    TTSEngine()
     while True:
         result = SpeechToText()
         if(result != None):
