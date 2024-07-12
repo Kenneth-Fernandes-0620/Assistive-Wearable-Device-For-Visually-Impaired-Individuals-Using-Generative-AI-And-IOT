@@ -8,11 +8,30 @@ model: PaliGemmaForConditionalGeneration = None
 processor: AutoProcessor = None
 prompt: str = "caption en"
 
+MODEL_DIR = "model"
+AUTOPROCESSOR_DIR = "autoprocessor"
+
+def model_save():
+    global model, processor
+    if model == None or processor == None:
+        raise Exception("Model not loaded, call model_load() first.")
+    model.save_pretrained(f"{MODEL_DIR}/{model_id}", from_pt=True)
+    processor.save_pretrained(f"{AUTOPROCESSOR_DIR}/{model_id}")
+
+
 # TODO: Add Documentation
 def model_load():
     global model, processor
-    model = PaliGemmaForConditionalGeneration.from_pretrained(model_id).eval()
-    processor = AutoProcessor.from_pretrained(model_id)
+
+    try:
+        model = PaliGemmaForConditionalGeneration.from_pretrained(f"{MODEL_DIR}/{model_id}").eval()
+        processor = AutoProcessor.from_pretrained(f"{AUTOPROCESSOR_DIR}/{model_id}")
+        print(f"Model loaded from local system")
+    except OSError:
+        print(f"Could not load model from local system")
+        model = PaliGemmaForConditionalGeneration.from_pretrained(model_id).eval()
+        processor = AutoProcessor.from_pretrained(model_id)
+        model_save() # Save the model to the local system
 
 # TODO: Add Documentation
 def image_captioning(url: str):
@@ -42,3 +61,9 @@ def image_captioning(image: np.ndarray):
         generation = model.generate(**model_inputs, max_new_tokens=100, do_sample=False)
         generation = generation[0][input_len:]
         return processor.decode(generation, skip_special_tokens=True)
+
+
+# To save the model, run this script as a standalone script
+if __name__ == "__main__":
+    model_load()
+    model_save()
