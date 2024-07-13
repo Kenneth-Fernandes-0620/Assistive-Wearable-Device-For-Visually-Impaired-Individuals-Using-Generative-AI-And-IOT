@@ -1,39 +1,24 @@
+from subprocess import Popen
 import speech_recognition as sr
-import pyttsx3
 
 # Initialize the recognizer and text-to-speech engine
-r: sr.Recognizer = None
-engine: pyttsx3.engine.Engine = None
-
-def TTSEngine():
-    global r, engine
-    r = sr.Recognizer()
-    engine = pyttsx3.init()
+speech_recognizer: sr.Recognizer = None
 
 # TODO: Add Documentation
 def SpeakText(command: str):
-    print("speaking the text, ",command)
-    engine.say(command)
-
-
-# TODO: Add Documentation
-def startTTSEngine():
-    if(engine == None):
-        raise Exception("Text-to-speech engine not loaded, call audio_load() first.")
-    engine.startLoop()
-
+    Popen(["python", "text_to_speech.py", command])
 
 # TODO: Add Documentation
 def SpeechToText() -> str:
-    if(r == None):
+    if(speech_recognizer == None):
         raise Exception("Recognizer not loaded, call audio_load() first.")
     try:
         with sr.Microphone() as source:
             print("Listening...")
-            r.adjust_for_ambient_noise(source, duration=0.5)
+            speech_recognizer.adjust_for_ambient_noise(source, duration=0.5)
            
-            audio: sr.AudioData = r.listen(source, timeout=3, phrase_time_limit=5)
-            text: str = r.recognize_google(audio).lower()
+            audio: sr.AudioData = speech_recognizer.listen(source, timeout=3, phrase_time_limit=5)
+            text: str = speech_recognizer.recognize_google(audio).lower()
             return text
     except sr.UnknownValueError:        
         print("Could not understand audio")
@@ -44,10 +29,3 @@ def SpeechToText() -> str:
     except sr.WaitTimeoutError:
         print("Listening timed out while waiting for phrase to start")
         return None
-
-if __name__ == "__main__":
-    TTSEngine()
-    while True:
-        result = SpeechToText()
-        if(result != None):
-            print(f"User said: {result}")

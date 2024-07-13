@@ -3,7 +3,9 @@ import time
 from queue import Queue
 from typing import List
 
-from audio_processing import SpeechToText, TTSEngine, SpeakText, startTTSEngine
+from audio_processing import (
+    SpeechToText,
+)
 from image_processing import get_image_from_webcam
 from networking import upload_image
 
@@ -27,14 +29,6 @@ def startup_worker():  # Function to load the model and audio and initialize the
     resultQueue = Queue()
 
     isRunning = True
-    isWaiting = False
-
-    TTSEngine()    
-
-
-# TODO: Add Documentation
-def text_to_speech_worker():
-    startTTSEngine()
 
 
 # TODO: Add Documentation
@@ -47,13 +41,13 @@ def image_processing_worker():
                 message: str = messageQueue.get()
                 print("Message received from user: ", message)
                 if message == commands[0]:
-                    res, image = get_image_from_webcam()
-                    if not res:
+                    success, image = get_image_from_webcam()
+                    if not success:
                         raise Exception("Unable to capture image from camera")
                     print("Processing image...")
                     result = upload_image(image)
                     resultQueue.put(result.json()["caption"])
-                    SpeakText(result.json()["caption"])
+                    print("Queue size: ", resultQueue.qsize())
                 elif message == commands[1] or message == commands[2]:
                     print("Sending SOS signal...")
                     raise Exception("Unimplemented command: SOS or help")
@@ -89,16 +83,13 @@ if __name__ == "__main__":
     # Create a thread object
     speech_thread: threading.Thread = threading.Thread(target=speech_processing_worker)
     image_thread: threading.Thread = threading.Thread(target=image_processing_worker)
-    audio_thread: threading.Thread = threading.Thread(target=text_to_speech_worker)
 
     # Start the thread
     speech_thread.start()
     image_thread.start()
-    audio_thread.start()
 
     # wait for thread1 to finish
     speech_thread.join()
     image_thread.join()
-    audio_thread.join()
 
     print("Application finished successfully.")
