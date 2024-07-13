@@ -8,6 +8,10 @@ speech_recognizer: sr.Recognizer = None
 def SpeakText(command: str):
     Popen(["python", "text_to_speech.py", command])
 
+def audio_load():
+    global speech_recognizer
+    speech_recognizer = sr.Recognizer()
+
 # TODO: Add Documentation
 def SpeechToText() -> str:
     if(speech_recognizer == None):

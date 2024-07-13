@@ -5,6 +5,7 @@ from typing import List
 
 from audio_processing import (
     SpeechToText,
+    audio_load,
 )
 from image_processing import get_image_from_webcam
 from networking import upload_image
@@ -29,6 +30,9 @@ def startup_worker():  # Function to load the model and audio and initialize the
     resultQueue = Queue()
 
     isRunning = True
+    isWaiting = False
+
+    audio_load()
 
 
 # TODO: Add Documentation
@@ -78,7 +82,9 @@ def speech_processing_worker():
 
 
 if __name__ == "__main__":
+    print("Starting application...")
     startup_worker()
+    print("Application started successfully.")
 
     # Create a thread object
     speech_thread: threading.Thread = threading.Thread(target=speech_processing_worker)
