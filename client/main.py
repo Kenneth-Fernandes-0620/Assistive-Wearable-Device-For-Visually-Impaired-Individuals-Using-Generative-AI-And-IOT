@@ -1,3 +1,4 @@
+import signal
 import threading
 import time
 from queue import Queue
@@ -80,6 +81,14 @@ def speech_processing_worker():
         print(f"Error in audio processing worker: {e}")
         isRunning = False
 
+def handle_terminate(sig, frame):
+    global isRunning, isWaiting
+    print("kill signal received, exiting...")
+    isWaiting = True
+    isRunning = False
+
+signal.signal(signal.SIGINT, handle_terminate)
+
 
 if __name__ == "__main__":
     print("Starting application...")
@@ -93,6 +102,9 @@ if __name__ == "__main__":
     # Start the thread
     speech_thread.start()
     image_thread.start()
+
+    while isRunning:
+        pass
 
     # wait for thread1 to finish
     speech_thread.join()
