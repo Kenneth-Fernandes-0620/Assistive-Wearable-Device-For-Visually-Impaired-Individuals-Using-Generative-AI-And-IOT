@@ -3,4 +3,5 @@ transformers
 opencv-python
 pillow
 numpy
-torch
+torch==2.3.1 -f https://download.pytorch.org/whl/cpu
+# torchvision==0.18.0 -f https://download.pytorch.org/whl/cpu

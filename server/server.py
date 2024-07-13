@@ -10,6 +10,7 @@ app = Flask(__name__)
 model_load()
 print("Model loaded successfully")
 
+
 # Routes
 @app.route("/")
 def health_check():
@@ -41,3 +42,6 @@ def process_image():
         print(f"Error processing image: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
+
+if __name__ == "__main__":
+    app.run(debug=True)

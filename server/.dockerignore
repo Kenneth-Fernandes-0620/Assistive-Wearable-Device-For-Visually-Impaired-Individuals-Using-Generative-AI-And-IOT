@@ -1,0 +1,4 @@
+model/*
+autoprocessor/*
+__pycache__/*
+development/*
