@@ -40,7 +40,6 @@ def startup_worker():  # Function to load the model and audio and initialize the
     isWaiting = False
 
 
-# TODO: Add Documentation
 def image_processing_worker():
     global isRunning, isWaiting, logQueue
     load_image_capture()
@@ -138,11 +137,9 @@ if __name__ == "__main__":
     logging_thread.start()
     speech_thread.start()
     image_thread.start()
+    audio_thread.start()
 
-    while isRunning:
-        pass
-
-    # wait for thread1 to finish
+    # Wait for threads to finish
     speech_thread.join()
     image_thread.join()
     logging_thread.join()
