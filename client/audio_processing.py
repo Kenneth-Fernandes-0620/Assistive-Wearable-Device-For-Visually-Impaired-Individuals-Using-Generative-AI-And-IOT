@@ -8,12 +8,12 @@ speech_recognizer: sr.Recognizer = None
 def SpeakText(command: str):
     Popen(["python", "text_to_speech.py", command])
 
-def audio_load():
+def load_speech_capture():
     global speech_recognizer
     speech_recognizer = sr.Recognizer()
 
 # TODO: Add Documentation
-def SpeechToText() -> str:
+def capture_speech() -> str:
     if(speech_recognizer == None):
         raise Exception("Recognizer not loaded, call audio_load() first.")
     try:

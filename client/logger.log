@@ -1,0 +1,80 @@
+2024-07-14 13:32:52,161 - __main__ - INFO - Logging worker started.
+2024-07-14 13:32:52,163 - __main__ - INFO - Starting logging worker...
+2024-07-14 13:32:52,163 - __main__ - INFO - Speech processing worker started.
+2024-07-14 13:35:25,616 - __main__ - INFO - Message received from user.
+2024-07-14 13:38:58,199 - __main__ - INFO - Logging worker started.
+2024-07-14 13:38:58,200 - __main__ - INFO - Starting logging worker...
+2024-07-14 13:38:58,200 - __main__ - INFO - Speech processing worker started.
+2024-07-14 13:39:46,308 - __main__ - INFO - Message received from user.
+2024-07-14 13:39:47,375 - __main__ - INFO - Captured image from camera
+2024-07-14 13:42:13,890 - __main__ - INFO - Logging worker started.
+2024-07-14 13:42:13,891 - __main__ - INFO - Starting logging worker...
+2024-07-14 13:42:13,906 - __main__ - INFO - Speech processing worker started.
+2024-07-14 13:44:27,489 - __main__ - INFO - Message received from user.
+2024-07-14 13:44:28,537 - __main__ - INFO - Captured image from camera
+2024-07-14 13:48:44,952 - __main__ - INFO - Logging worker started.
+2024-07-14 13:48:44,953 - __main__ - INFO - Starting logging worker...
+2024-07-14 13:48:44,953 - __main__ - INFO - Speech processing worker started.
+2024-07-14 13:51:00,785 - __main__ - INFO - Message received from user.
+2024-07-14 13:51:01,325 - __main__ - INFO - Captured image from camera
+2024-07-14 13:53:22,792 - __main__ - INFO - Logging worker started.
+2024-07-14 13:53:22,792 - __main__ - INFO - Starting logging worker...
+2024-07-14 13:53:22,792 - __main__ - INFO - Speech processing worker started.
+2024-07-14 13:58:06,271 - __main__ - INFO - Message received from user.
+2024-07-14 13:58:06,793 - __main__ - INFO - Captured image from camera
+2024-07-14 13:58:11,488 - __main__ - INFO - Error in image processing worker: HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /process_image (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000011E1CDB83D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2024-07-14 13:58:11,488 - __main__ - INFO - Logging worker finished.
+2024-07-14 14:02:06,230 - __main__ - INFO - Logging worker started.
+2024-07-14 14:02:06,231 - __main__ - INFO - Starting logging worker...
+2024-07-14 14:02:06,232 - __main__ - INFO - Speech processing worker started.
+2024-07-14 14:03:51,732 - __main__ - INFO - Message received from user.
+2024-07-14 14:03:52,789 - __main__ - INFO - Captured image from camera
+2024-07-14 14:03:56,966 - __main__ - INFO - Error in image processing worker: 'ConnectionError' object has no attribute 'json'
+2024-07-14 14:03:56,966 - __main__ - INFO - Logging worker finished.
+2024-07-14 14:07:19,744 - __main__ - INFO - Logging worker started.
+2024-07-14 14:07:19,745 - __main__ - INFO - Starting logging worker...
+2024-07-14 14:07:19,746 - __main__ - INFO - Speech processing worker started.
+2024-07-14 14:09:20,202 - __main__ - INFO - Message received from user.
+2024-07-14 14:09:20,731 - __main__ - INFO - Captured image from camera
+2024-07-14 14:09:25,425 - __main__ - INFO - Error in image processing worker: can only concatenate str (not "MaxRetryError") to str
+2024-07-14 14:09:25,425 - __main__ - INFO - Logging worker finished.
+2024-07-14 14:09:47,688 - __main__ - INFO - Logging worker started.
+2024-07-14 14:09:47,689 - __main__ - INFO - Starting logging worker...
+2024-07-14 14:09:47,689 - __main__ - INFO - Speech processing worker started.
+2024-07-14 14:10:26,953 - __main__ - INFO - Message received from user.
+2024-07-14 14:10:27,475 - __main__ - INFO - Captured image from camera
+2024-07-14 14:10:32,151 - __main__ - INFO - Error in image processing worker: can only concatenate str (not "MaxRetryError") to str
+2024-07-14 14:10:32,151 - __main__ - INFO - Logging worker finished.
+2024-07-14 14:11:47,527 - __main__ - INFO - Logging worker started.
+2024-07-14 14:11:47,528 - __main__ - INFO - Starting logging worker...
+2024-07-14 14:11:47,529 - __main__ - INFO - Speech processing worker started.
+2024-07-14 14:12:16,644 - __main__ - INFO - Message received from user.
+2024-07-14 14:12:17,693 - __main__ - INFO - Captured image from camera
+2024-07-14 14:12:22,386 - __main__ - INFO - Error in uploading image, HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /process_image (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001BEA84E73D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2024-07-14 14:12:56,992 - __main__ - INFO - Message received from user.
+2024-07-14 14:12:57,007 - __main__ - INFO - Captured image from camera
+2024-07-14 14:13:01,198 - __main__ - INFO - Error in uploading image, HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /process_image (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001BEA84E7E20>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2024-07-14 14:13:39,804 - __main__ - INFO - Message received from user.
+2024-07-14 14:13:39,820 - __main__ - INFO - Captured image from camera
+2024-07-14 14:13:43,996 - __main__ - INFO - Error in uploading image, HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /process_image (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001BEA8699850>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2024-07-14 14:17:47,510 - __main__ - INFO - Message received from user.
+2024-07-14 14:17:48,030 - __main__ - INFO - Captured image from camera
+2024-07-14 14:17:52,223 - __main__ - INFO - Error in uploading image, HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /process_image (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001BEA86A2280>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2024-07-14 18:48:11,522 - __main__ - INFO - Kill signal received, exiting...
+2024-07-14 18:48:11,523 - __main__ - INFO - Logging worker finished.
+2024-07-14 19:46:43,884 - __main__ - INFO - Logging worker started.
+2024-07-14 19:46:43,885 - __main__ - INFO - Starting logging worker...
+2024-07-14 19:46:43,885 - __main__ - INFO - Speech processing worker started.
+2024-07-14 19:47:18,945 - __main__ - INFO - Message received from user.
+2024-07-14 19:47:20,014 - __main__ - INFO - Captured image from camera
+2024-07-14 19:47:24,196 - __main__ - INFO - Error in uploading image, HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /process_image (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000021ED26773D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2024-07-14 19:48:49,804 - __main__ - INFO - Kill signal received, exiting...
+2024-07-14 19:48:49,804 - __main__ - INFO - Logging worker finished.
+2024-07-14 19:48:58,952 - __main__ - INFO - Logging worker started.
+2024-07-14 19:48:58,952 - __main__ - INFO - Starting logging worker...
+2024-07-14 19:48:58,952 - __main__ - INFO - Speech processing worker started.
+2024-07-14 19:49:26,484 - __main__ - INFO - Message received from user.
+2024-07-14 19:49:27,528 - __main__ - INFO - Captured image from camera
+2024-07-14 19:49:32,358 - __main__ - INFO - Error in uploading image, HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /process_image (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001D4CEB37340>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2024-07-14 19:50:04,556 - __main__ - INFO - Kill signal received, exiting...
+2024-07-14 19:50:04,556 - __main__ - INFO - Logging worker finished.

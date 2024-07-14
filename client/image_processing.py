@@ -1,12 +1,19 @@
-import time
 import cv2
 
+video_capture: cv2.VideoCapture = None
 
+
+# TODO: Add Documentation
+def load_image_capture():
+    global video_capture
+    video_capture = cv2.VideoCapture(0)
+
+
+# TODO: Add Documentation
 def get_image_from_webcam():
-    cap = cv2.VideoCapture(0)
-    time.sleep(2)  # wait for a second to let the camera adjust to the light
-    ret, frame = cap.read()
+    global video_capture
+    ret, frame = video_capture.read()
+    video_capture.release()
     if not ret:
         raise Exception("Unable to capture image from camera")
-    cap.release()
     return cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 90])
