@@ -1,10 +1,10 @@
+import signal
 import threading
 import time
 from queue import Queue
 from typing import List, Optional
 import spacy
 
-# Assuming the following imports are from your existing modules
 from audio_processing import SpeechToText, TTSEngine, SpeakText, startTTSEngine
 from image_processing import get_image_from_webcam
 from networking import upload_image
@@ -45,8 +45,10 @@ def startup_worker():
     isRunning = True
     isWaiting = False
 
-    TTSEngine()
+    TTSEngine()    
 
+
+# TODO: Add Documentation
 def text_to_speech_worker():
     startTTSEngine()
 
@@ -57,20 +59,18 @@ def image_processing_worker():
             if not messageQueue.empty():
                 message: str = messageQueue.get()
                 print("Message received from user: ", message)
-                matched_command = match_command(message)
-                if matched_command:
-                    if matched_command == "describe environment":
-                        res, image = get_image_from_webcam()
-                        if not res:
-                            raise Exception("Unable to capture image from camera")
-                        print("Processing image...")
-                        result = upload_image(image)
-                        resultQueue.put(result.json()["caption"])
-                        SpeakText(result.json()["caption"])
-                    elif matched_command == "SOS" or matched_command == "help":
-                        print("Sending SOS signal...")
-                        raise Exception("Unimplemented command: SOS or help")
-                    print("Image processing complete.")
+                if message == commands[0]:
+                    res, image = get_image_from_webcam()
+                    if not res:
+                        raise Exception("Unable to capture image from camera")
+                    print("Processing image...")
+                    result = upload_image(image)
+                    resultQueue.put(result.json()["caption"])
+                    SpeakText(result.json()["caption"])
+                elif message == commands[1] or message == commands[2]:
+                    print("Sending SOS signal...")
+                    raise Exception("Unimplemented command: SOS or help")
+                print("Image processing complete.")
                 isWaiting = False
             else:
                 time.sleep(2)
@@ -93,22 +93,26 @@ def speech_processing_worker():
         print(f"Error in audio processing worker: {e}")
         isRunning = False
 
-if __name__ == "__main__":
-    startup_worker()
 
-    # Create thread objects
-    speech_thread = threading.Thread(target=speech_processing_worker)
-    image_thread = threading.Thread(target=image_processing_worker)
-    audio_thread = threading.Thread(target=text_to_speech_worker)
+if __name__ == "__main__":
+    print("Starting application...")
+    startup_worker()
+    print("Application started successfully.")
+
+    # Create a thread object
+    speech_thread: threading.Thread = threading.Thread(target=speech_processing_worker)
+    image_thread: threading.Thread = threading.Thread(target=image_processing_worker)
+    audio_thread: threading.Thread = threading.Thread(target=text_to_speech_worker)
 
     # Start the threads
     speech_thread.start()
     image_thread.start()
-    audio_thread.start()
+
+    while isRunning:
+        pass
 
     # Wait for threads to finish
     speech_thread.join()
     image_thread.join()
-    audio_thread.join()
 
     print("Application finished successfully.")

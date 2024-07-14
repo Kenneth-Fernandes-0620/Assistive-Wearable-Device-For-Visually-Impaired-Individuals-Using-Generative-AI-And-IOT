@@ -5,11 +5,11 @@ import numpy as np
 
 from server_image_processing import image_captioning, model_load
 
-app = Flask(__name__)
 
 model_load()
 print("Model loaded successfully")
 
+app = Flask(__name__)
 
 # Routes
 @app.route("/")
