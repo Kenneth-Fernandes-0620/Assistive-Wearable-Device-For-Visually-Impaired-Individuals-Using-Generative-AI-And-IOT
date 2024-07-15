@@ -4,6 +4,7 @@ import threading
 import time
 from queue import Queue
 from typing import List
+import spacy
 
 from audio_processing import (
     capture_speech,
@@ -39,6 +40,21 @@ def startup_worker():  # Function to load the model and audio and initialize the
     isRunning = True
     isWaiting = False
 
+# Load the spaCy model
+nlp = spacy.load("en_core_web_sm")
+
+def match_command(speech: str) -> Optional[str]:
+    """
+    This function takes a string input and determines if it matches any of the predefined commands using NLP.
+    If a match is found, it returns the command; otherwise, it returns None.
+    """
+    doc = nlp(speech.lower().strip())
+    for command in commands:
+        command_doc = nlp(command)
+        similarity = doc.similarity(command_doc)
+        if similarity > 0.75:  # Adjust the similarity threshold as needed
+            return command
+    return None
 
 def image_processing_worker():
     global isRunning, isWaiting, logQueue
