@@ -12,8 +12,10 @@ def load_image_capture():
 # TODO: Add Documentation
 def get_image_from_webcam():
     global video_capture
-    ret, frame = video_capture.read()
-    video_capture.release()
+    ret, frame = video_capture.read()    
     if not ret:
         raise Exception("Unable to capture image from camera")
     return cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 90])
+
+def free_video_capture():
+    video_capture.release()

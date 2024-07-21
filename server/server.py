@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-from PIL import Image
 import cv2
 import numpy as np
 
@@ -44,4 +43,4 @@ def process_image():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

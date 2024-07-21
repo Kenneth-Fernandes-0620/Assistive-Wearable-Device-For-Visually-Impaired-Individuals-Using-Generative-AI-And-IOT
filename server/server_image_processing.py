@@ -13,7 +13,7 @@ AUTOPROCESSOR_DIR = "autoprocessor"
 
 def model_save():
     global model, processor
-    if model == None or processor == None:
+    if not model or not processor:
         raise Exception("Model not loaded, call model_load() first.")
     model.save_pretrained(f"{MODEL_DIR}/{model_id}", from_pt=True)
     processor.save_pretrained(f"{AUTOPROCESSOR_DIR}/{model_id}")

@@ -1,7 +1,5 @@
 import requests
 
-from image_processing import get_image_from_webcam
-
 URL = "http://localhost:5000/process_image"
 
 

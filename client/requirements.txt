@@ -1,7 +1,6 @@
-speechrecognition
-pyttsx3
-pyaudio
-transformers
-opencv-python
-pillow
-torch
+speechrecognition==3.10.4
+pyttsx3==2.90
+pyaudio==0.2.14
+opencv-python==4.9.0.80
+pillow==10.3.0
+requests==2.26.0

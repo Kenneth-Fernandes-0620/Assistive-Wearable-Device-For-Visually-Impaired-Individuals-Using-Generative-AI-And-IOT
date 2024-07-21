@@ -1,7 +1,6 @@
-flask
-transformers
-opencv-python
-pillow
-numpy
-torch==2.3.1 -f https://download.pytorch.org/whl/cpu
-# torchvision==0.18.0 -f https://download.pytorch.org/whl/cpu
+git+https://github.com/huggingface/transformers.git
+flask==3.0.3
+numpy==1.24.3
+opencv-python==4.10.0.84
+pillow==10.4.0
+torch==2.3.0
