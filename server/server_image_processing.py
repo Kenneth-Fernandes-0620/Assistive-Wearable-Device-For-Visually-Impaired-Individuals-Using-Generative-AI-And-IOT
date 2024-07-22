@@ -3,13 +3,14 @@ from PIL import Image
 import torch
 import numpy as np
 
-model_id: str = "google/paligemma-3b-mix-224"
+model_id: str = "google/paligemma-3b-ft-ocrvqa-224"
 model: PaliGemmaForConditionalGeneration = None
 processor: AutoProcessor = None
 prompt: str = "caption en"
 
 MODEL_DIR = "model"
 AUTOPROCESSOR_DIR = "autoprocessor"
+
 
 def model_save():
     global model, processor
@@ -24,14 +25,17 @@ def model_load():
     global model, processor
 
     try:
-        model = PaliGemmaForConditionalGeneration.from_pretrained(f"{MODEL_DIR}/{model_id}").eval()
+        model = PaliGemmaForConditionalGeneration.from_pretrained(
+            f"{MODEL_DIR}/{model_id}"
+        ).eval()
         processor = AutoProcessor.from_pretrained(f"{AUTOPROCESSOR_DIR}/{model_id}")
         print(f"Model loaded from local system")
     except OSError:
         print(f"Could not load model from local system")
         model = PaliGemmaForConditionalGeneration.from_pretrained(model_id).eval()
         processor = AutoProcessor.from_pretrained(model_id)
-        model_save() # Save the model to the local system
+        model_save()  # Save the model to the local system
+
 
 # TODO: Add Documentation
 def image_captioning(url: str):

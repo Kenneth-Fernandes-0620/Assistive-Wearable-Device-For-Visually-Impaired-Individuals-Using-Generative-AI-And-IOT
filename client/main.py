@@ -72,11 +72,13 @@ def image_processing_worker():
                         logQueue.put(
                             (f"Error in uploading image, {e.args[0]}", logging.ERROR)
                         )
+                        resultQueue.put("Error in uploading image")
                 elif message == commands[1] or message == commands[2]:
                     logQueue.put(("Sending SOS signal...", logging.INFO))
                     raise Exception("Unimplemented command: SOS or help")
                 elif message == commands[3]:
                     logQueue.put(("Exiting...", logging.INFO))
+                    resultQueue.put("Goodbye!")                    
                     isRunning = False
                 isWaiting = False
             else:
