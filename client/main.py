@@ -87,7 +87,7 @@ def image_processing_worker():
                             (f"Error in uploading image, {e.args[0]}", logging.ERROR)
                         )
                         resultQueue.put(
-                            "Sorry, I am having trouble uploading the image."
+                            "Sorry, I am having trouble uploading the image. Please check your internet connection and try again"
                         )
                 elif message == commands[1] or message == commands[2]:
                     logQueue.put(("Sending SOS signal...", logging.INFO))
@@ -145,9 +145,10 @@ def speech_processing_worker():
             while not isWaiting:
                 result: str = capture_speech()
                 if result:
+                    print(result)
                     command = match_command(result)
                     if command is not None:
-                        resultQueue.put("I have recieved the command: " + command)
+                        resultQueue.put("I have recieved the command to " + command)
                         messageQueue.put(command)
                         logQueue.put(("Message received from user.", logging.INFO))
                         isWaiting = True
