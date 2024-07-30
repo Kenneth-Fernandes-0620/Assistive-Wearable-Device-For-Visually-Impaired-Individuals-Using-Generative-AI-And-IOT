@@ -6,7 +6,6 @@ import numpy as np
 model_id: str = "google/paligemma-3b-ft-ocrvqa-224"
 model: PaliGemmaForConditionalGeneration = None
 processor: AutoProcessor = None
-prompt: str = "caption en"
 
 MODEL_DIR = "model"
 AUTOPROCESSOR_DIR = "autoprocessor"
@@ -38,7 +37,7 @@ def model_load():
 
 
 # TODO: Add Documentation
-def image_captioning(url: str):
+def image_captioning(url: str, prompt="caption en"):
     if model is None or processor is None:
         raise Exception("Model not loaded, call model_load() first.")
 
@@ -52,7 +51,7 @@ def image_captioning(url: str):
 
 
 # TODO: Add Documentation
-def image_captioning(image: np.ndarray):
+def image_captioning(image: np.ndarray, prompt="caption en"):
     if model is None or processor is None:
         raise Exception("Model not loaded, call model_load() first.")
 

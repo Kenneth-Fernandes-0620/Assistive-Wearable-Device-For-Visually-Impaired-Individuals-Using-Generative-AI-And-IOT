@@ -18,9 +18,15 @@ def health_check():
 
 @app.route("/process_image", methods=["POST"])
 def process_image():
+
     # Check if image file is present in the request
+    prompt = request.form.get("prompt","")
+
     if "image" not in request.files:
         return jsonify({"error": "No image file uploaded"}), 400
+
+    elif prompt == "":
+        return jsonify({"error": "No prompt provided"}), 400
 
     try:
         # Get the image file
@@ -32,7 +38,7 @@ def process_image():
             decoded_image, cv2.COLOR_BGR2RGB
         )
         try:
-            return jsonify({"caption": image_captioning(recolored_image)}), 200
+            return jsonify({"caption": image_captioning(recolored_image, prompt)}), 200
         except Exception as e:
             print(f"Error processing image: {e}")
             return jsonify({"error": f"Error processing image: {e}"}), 500
