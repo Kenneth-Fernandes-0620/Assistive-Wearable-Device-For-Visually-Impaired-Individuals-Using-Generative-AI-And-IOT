@@ -1,6 +1,6 @@
 import requests
 
-URL = "http://localhost:5000/process_image"
+URL = "https://desktop-gvg2hfa.tail23d4c9.ts.net/process_image"
 
 
 def upload_image(image):
