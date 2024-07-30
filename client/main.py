@@ -74,7 +74,7 @@ def image_processing_worker():
                     else:
                         logQueue.put(("Captured image from camera", logging.INFO))
                     try:
-                        response = upload_image(image)
+                        response = upload_image(image,"caption en")
                         resultQueue.put(response.json()["caption"])
                         logQueue.put(
                             (
