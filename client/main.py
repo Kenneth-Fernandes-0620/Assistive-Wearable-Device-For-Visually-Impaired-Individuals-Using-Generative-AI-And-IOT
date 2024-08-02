@@ -5,12 +5,10 @@ import time
 from queue import Queue
 from typing import List, Optional
 import difflib
+import numpy as np
+import cv2
 
-from audio_processing import (
-    capture_speech,
-    load_speech_capture,
-    SpeakText
-)
+from audio_processing import capture_speech, load_speech_capture, SpeakText
 from util import load_logger
 from image_processing import (
     free_video_capture,
@@ -32,6 +30,7 @@ commands: List[str] = [
     "SOS",
     "help",
     "exit",
+    "detect crowd",
 ]
 
 
@@ -74,7 +73,7 @@ def image_processing_worker():
                     else:
                         logQueue.put(("Captured image from camera", logging.INFO))
                     try:
-                        response = upload_image(image,"caption en")
+                        response = upload_image(image, "caption en")
                         resultQueue.put(response.json()["caption"])
                         logQueue.put(
                             (
@@ -99,6 +98,46 @@ def image_processing_worker():
                     logQueue.put(("Exiting...", logging.INFO))
                     resultQueue.put("Goodbye!")
                     isRunning = False
+                elif message == commands[4]:
+                    success, image = get_image_from_webcam()
+                    if not success:
+                        logQueue.put(
+                            ("Unable to capture image from camera", logging.ERROR)
+                        )
+                        raise Exception("Unable to capture image from camera")
+                    else:
+                        logQueue.put(("Captured image from camera", logging.INFO))
+                    try:
+                        response = upload_image(
+                            image, "Does the image contain a crowed of people?"
+                        )
+                        response_json = response.json()
+                        detections = response_json.get("caption", [])
+                        print("detected: ", detections)
+
+                        # if is_crowd(detections):
+                        #     person_count = len(detections)
+                        #     if person_count > 4:
+                        #         resultQueue.put(
+                        #             f"Crowd detected with {person_count} persons"
+                        #         )
+                        #     else:
+                        #         resultQueue.put(
+                        #             f"Crowd detected but less than 5 persons: {person_count}"
+                        #         )
+                        # else:
+                        #     resultQueue.put(f"Number of Person: {len(detections)}")
+
+                        logQueue.put(
+                            (f"Received response: {response_json}", logging.INFO)
+                        )
+                    except Exception as e:
+                        logQueue.put(
+                            (f"Error in uploading image, {e.args[0]}", logging.ERROR)
+                        )
+                        resultQueue.put(
+                            "Sorry, I am having trouble uploading the image. Please check your internet connection and try again"
+                        )
                 isWaiting = False
             else:
                 time.sleep(0.5)
@@ -110,13 +149,14 @@ def image_processing_worker():
 
 
 def audio_processing_worker():
-    while isRunning:        
+    while isRunning:
         if not resultQueue.empty():
             result: str = resultQueue.get()
             SpeakText(result)
             logQueue.put(("Audio output sent.", logging.INFO))
         else:
             time.sleep(0.5)
+
 
 def logging_worker():
     global isRunning, logger, logQueue
@@ -148,7 +188,7 @@ def speech_processing_worker():
                     print(result)
                     command = match_command(result)
                     if command is not None:
-                        resultQueue.put("I have recieved the command to " + command)
+                        resultQueue.put("I have received the command to " + command)
                         messageQueue.put(command)
                         logQueue.put(("Message received from user.", logging.INFO))
                         isWaiting = True
@@ -174,10 +214,18 @@ if __name__ == "__main__":
     logQueue.put(("Starting logging worker...", logging.INFO))
 
     # Create thread objects
-    speech_thread: threading.Thread = threading.Thread(target=speech_processing_worker) # Does Speech Recognition
-    image_thread: threading.Thread = threading.Thread(target=image_processing_worker) # Does Image capture and Processing
-    logging_thread: threading.Thread = threading.Thread(target=logging_worker) # Logs messages
-    audio_thread: threading.Thread = threading.Thread(target=audio_processing_worker) # Does Audio Output
+    speech_thread: threading.Thread = threading.Thread(
+        target=speech_processing_worker
+    )  # Does Speech Recognition
+    image_thread: threading.Thread = threading.Thread(
+        target=image_processing_worker
+    )  # Does Image capture and Processing
+    logging_thread: threading.Thread = threading.Thread(
+        target=logging_worker
+    )  # Logs messages
+    audio_thread: threading.Thread = threading.Thread(
+        target=audio_processing_worker
+    )  # Does Audio Output
 
     # Start the threads
     logging_thread.start()
