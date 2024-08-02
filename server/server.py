@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 import cv2
 import numpy as np
 
@@ -9,6 +9,10 @@ model_load()
 print("Model loaded successfully")
 
 app = Flask(__name__)
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(app.static_folder, 'favicon.ico')
 
 # Routes
 @app.route("/")
