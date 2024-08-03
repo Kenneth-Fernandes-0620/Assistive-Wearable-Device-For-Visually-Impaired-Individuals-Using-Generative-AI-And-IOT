@@ -5,8 +5,6 @@ import time
 from queue import Queue
 from typing import List, Optional
 import difflib
-import numpy as np
-import cv2
 
 from audio_processing import capture_speech, load_speech_capture, SpeakText
 from util import load_logger
