@@ -1,7 +1,6 @@
-from cv2 import VideoCapture, imencode, IMWRITE_JPEG_QUALITY
+from cv2 import VideoCapture, QRCodeDetector, cvtColor, imencode, IMWRITE_JPEG_QUALITY, COLOR_BGR2GRAY
 
 video_capture: VideoCapture = None
-
 
 # TODO: Add Documentation
 def load_image_capture():
@@ -31,5 +30,22 @@ def list_cameras():
         print(f"Camera {camera_index} is not available")
     cap.release()
 
+def get_QRCode_from_webcam() -> str:
+    global video_capture
+    ret, frame = video_capture.read()
+    if not ret:
+        raise Exception("Unable to capture image from camera")
+    data, bbox, _ = QRCodeDetector().detectAndDecode(
+        cvtColor(frame, COLOR_BGR2GRAY)
+    )
+
+    return data
+
 if __name__ == "__main__":
     list_cameras()
+    load_image_capture()
+    while True:
+        res = get_QRCode_from_webcam()
+        if res:
+            print(res)
+            break

@@ -1,5 +1,5 @@
 speechrecognition==3.10.4
-pyttsx3==2.90
+pyttsx3==2.90 # requires espeak, use sudo apt install espeak to install
 PyAudio==0.2.14 # requires portaudio, use sudo apt-get install portaudio19-dev to install portaudio
 pillow==10.3.0
 requests==2.26.0
