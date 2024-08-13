@@ -33,3 +33,11 @@ def capture_speech() -> str:
     except sr.WaitTimeoutError:
         print("Listening timed out while waiting for phrase to start")
         return None
+
+def list_microphones():
+  """Lists all available microphones on the system"""
+  for i, name in enumerate(sr.Microphone.list_microphone_names()):
+      print(f"{i}: {name}")
+
+if __name__ == "__main__":
+  list_microphones()
