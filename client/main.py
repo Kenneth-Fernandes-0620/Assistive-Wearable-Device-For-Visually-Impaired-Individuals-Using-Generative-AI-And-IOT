@@ -5,8 +5,6 @@ import time
 from queue import Queue
 from typing import List, Optional
 import difflib
-import numpy as np
-import cv2
 
 from audio_processing import capture_speech, load_speech_capture, SpeakText
 from util import load_logger
@@ -14,6 +12,7 @@ from image_processing import (
     free_video_capture,
     get_image_from_webcam,
     load_image_capture,
+    get_QRCode_from_webcam,
 )
 from networking import upload_image
 
@@ -29,10 +28,12 @@ commands: List[str] = [
     "describe environment",
     "SOS",
     "help",
-    "exit",
+    "setup",
     "detect crowd",
+    "exit",
 ]
 
+delay = 0
 
 def startup_worker():
     global messageQueue, resultQueue, isRunning, isWaiting, logQueue
@@ -64,6 +65,7 @@ def image_processing_worker():
             if not messageQueue.empty():
                 message: str = messageQueue.get()
                 if message == commands[0]:
+                    # Describe Environment
                     success, image = get_image_from_webcam()
                     if not success:
                         logQueue.put(
@@ -89,16 +91,21 @@ def image_processing_worker():
                             "Sorry, I am having trouble uploading the image. Please check your internet connection and try again"
                         )
                 elif message == commands[1] or message == commands[2]:
+                    # SOS Signal
                     logQueue.put(("Sending SOS signal...", logging.INFO))
                     resultQueue.put(
                         "Sorry, I am unable to send SOS signals at this time"
                     )
                     raise Exception("Unimplemented command: SOS or help")
+
                 elif message == commands[3]:
-                    logQueue.put(("Exiting...", logging.INFO))
-                    resultQueue.put("Goodbye!")
-                    isRunning = False
+                    # Setup device
+                    result = get_QRCode_from_webcam()
+                    logQueue.put((f"QR Code Scanned: {result}", logging.INFO))
+                    resultQueue.put(f"QR Code Detected, will attempt to setup")
+
                 elif message == commands[4]:
+                    # Crowd Detection
                     success, image = get_image_from_webcam()
                     if not success:
                         logQueue.put(
@@ -138,6 +145,11 @@ def image_processing_worker():
                         resultQueue.put(
                             "Sorry, I am having trouble uploading the image. Please check your internet connection and try again"
                         )
+                elif message == commands[5]:
+                    # Exit
+                    logQueue.put(("Exiting...", logging.INFO))
+                    resultQueue.put("Goodbye!")
+                    isRunning = False
                 isWaiting = False
             else:
                 time.sleep(0.5)
