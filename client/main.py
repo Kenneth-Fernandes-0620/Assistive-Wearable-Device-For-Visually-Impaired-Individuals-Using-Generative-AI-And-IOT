@@ -205,7 +205,7 @@ def speech_processing_worker():
                         logQueue.put(("Message received from user.", logging.INFO))
                         isWaiting = True
             if isWaiting:
-                time.sleep(0.5)
+                time.sleep(0.1)
     except Exception as e:
         logQueue.put((f"Error in Speech processing worker: {e}", logging.ERROR))
         isRunning = False

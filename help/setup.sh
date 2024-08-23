@@ -16,4 +16,7 @@ echo "Packages Installation completed!"
 wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh -O /tmp/miniforge.sh
 bash /tmp/miniforge.sh -b
 
-Echo "modify the alsa config to use the correct card"
+Echo "modify the alsa config to use the correct card in /usr/share/alsa"
+
+# Install Tailscale
+curl -fsSL https://tailscale.com/install.sh | sh
