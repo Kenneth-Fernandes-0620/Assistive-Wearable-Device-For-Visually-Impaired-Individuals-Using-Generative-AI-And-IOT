@@ -1,10 +1,28 @@
 import requests
+from gps import load_gps, get_gps
 
-URL = "https://desktop-gvg2hfa.tail23d4c9.ts.net/process_image"
+URLS = ["https://desktop-gvg2hfa.tail23d4c9.ts.net/","https://laptop-7dmbbhmj.tail23d4c9.ts.net/"]
 
+def discover_server():
+    for url in URLS:
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                print(f"Server found at {url}")
+                return url
+        except:
+            pass
+    raise Exception("No servers found, Check your internet connection and try again")
 
-def upload_image(image, prompt="caption en"):
-    response = requests.post(URL, files={"image": image}, data={"prompt": prompt})
+URL = discover_server()
+load_gps()
+
+def upload_image(image, prompt="caption en", id="test_id"):
+    response = requests.post(URL + "process_image", files={"image": image}, data={
+        "prompt": prompt,
+        "gps" : get_gps(),
+        "id": id
+        })
     if response.status_code == 200:
         print(
             "Image uploaded and processed successfully!, response: ",
