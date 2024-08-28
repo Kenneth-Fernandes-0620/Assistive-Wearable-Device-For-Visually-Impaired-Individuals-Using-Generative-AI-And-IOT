@@ -15,6 +15,7 @@ from image_processing import (
     get_QRCode_from_webcam,
 )
 from networking import upload_image
+from similarity_processing import find_most_similar_command
 
 messageQueue: Queue = None
 resultQueue: Queue = None
@@ -197,8 +198,10 @@ def speech_processing_worker():
             while not isWaiting:
                 result: str = capture_speech()
                 if result:
-                    print(result)
+                    print(f"I heard: {result}")
+                    # command = find_most_similar_command(result)
                     command = match_command(result)
+                    print(f"Command: {command}")
                     if command is not None:
                         resultQueue.put("I have received the command to " + command)
                         messageQueue.put(command)
