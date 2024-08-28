@@ -28,6 +28,7 @@ def process_image():
     # Check if image file is present in the request
     prompt = request.form.get("prompt","")
     uid = request.form.get("id","")
+    gps = request.form.get("gps","")
 
     if "image" not in request.files:
         return jsonify({"error": "No image file uploaded"}), 400
@@ -35,15 +36,18 @@ def process_image():
     elif prompt == "":
         return jsonify({"error": "No prompt provided"}), 400
 
+
+    print(f"Processing image with prompt: {prompt}, for user: {uid}, with gps: {gps}")
+
     try:
         image_contents = request.files["image"]
         image_file = image_contents.read()
 
         # Enable the following code to save the image to the local drive
-        # # Save the image to the local drive
-        # image_path = os.path.join("images", "res.jpg")
-        # with open(image_path, "wb") as f:
-        #     f.write(image_file)
+        # Save the image to the local drive
+        image_path = os.path.join("images", "res.jpg")
+        with open(image_path, "wb") as f:
+            f.write(image_file)
 
         decoded_image: cv2.typing.MatLike = cv2.imdecode(
             np.fromstring(image_file, np.uint8), cv2.IMREAD_COLOR
@@ -54,7 +58,7 @@ def process_image():
         try:
             result = image_captioning(recolored_image, prompt)
             if uid != "":
-                send_document_to_firestore("requests", {"uid": uid, "prompt": prompt, "result": result})
+                send_document_to_firestore("requests", {"uid": uid, "prompt": prompt, "result": result, "gps": gps})
             return jsonify({"caption": result}), 200
         except Exception as e:
             print(f"Error processing image: {e}")

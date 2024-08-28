@@ -6,6 +6,7 @@ video_capture: VideoCapture = None
 def load_image_capture():
     global video_capture
     video_capture = VideoCapture(0)
+    video_capture.read() # initial read to get the camera started
 
 
 # TODO: Add Documentation
