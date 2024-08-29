@@ -86,6 +86,35 @@ def get_gps():
     return f"12°56'03.2\"N 77°36'21.1\"E"
 
 
+def dms_to_dd(dms_str):
+    # Split the latitude and longitude
+    lat_str, lon_str = dms_str.split()
+
+    # Convert latitude
+    lat_deg = int(lat_str[0:2])
+    lat_min = int(lat_str[3:5])
+    lat_sec = float(lat_str[6:-2])
+    lat_dir = lat_str[-1]
+
+    # Convert longitude
+    lon_deg = int(lon_str[0:2])
+    lon_min = int(lon_str[3:5])
+    lon_sec = float(lon_str[6:-2])
+    lon_dir = lon_str[-1]
+
+    # Convert to decimal degrees
+    lat_dd = lat_deg + (lat_min / 60) + (lat_sec / 3600)
+    lon_dd = lon_deg + (lon_min / 60) + (lon_sec / 3600)
+
+    # Apply direction
+    if lat_dir == "S":
+        lat_dd = -lat_dd
+    if lon_dir == "W":
+        lon_dd = -lon_dd
+
+    return f"{round(lat_dd,6)},{round(lon_dd,6)}"
+
+
 if __name__ == "__main__":
     load_gps()
     print(get_gps())

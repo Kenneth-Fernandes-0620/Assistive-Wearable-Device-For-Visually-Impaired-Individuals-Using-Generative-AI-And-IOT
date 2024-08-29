@@ -32,6 +32,7 @@ commands: List[str] = [
     "setup",
     "detect crowd",
     "exit",
+    "weather",
 ]
 
 delay = 0
@@ -151,6 +152,11 @@ def image_processing_worker():
                     logQueue.put(("Exiting...", logging.INFO))
                     resultQueue.put("Goodbye!")
                     isRunning = False
+
+                elif message == commands[6]:
+                    # Weather
+                    resultQueue.put("Sorry, I am unable to provide weather updates at this time")
+                    raise Exception("Unimplemented command: Weather")
                 isWaiting = False
             else:
                 time.sleep(0.5)

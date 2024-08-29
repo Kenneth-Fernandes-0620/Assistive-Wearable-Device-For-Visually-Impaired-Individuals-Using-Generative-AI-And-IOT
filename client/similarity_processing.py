@@ -7,6 +7,8 @@ prompts = {
     "Explain the current scene": "Describe the environment",
     "Tell me what is happening around me": "Describe the environment",
     "What do you see?": "Describe the environment",
+    "Can you describe the surroundings?": "Describe the environment",
+    "what can i see": "Describe the environment",
 
     "Emergency situation": "SOS",
     "I need assistance": "SOS",
@@ -42,6 +44,12 @@ prompts = {
     "Exit now": "exit",
     "Stop everything": "exit",
     "Can we quit the program?": "exit",
+
+    "What is the weather like?": "weather",
+    "Give me the weather forecast": "weather",
+    "is it going to rain today?": "weather",
+    "is it Sunny outside?": "weather",
+    "Weather update": "weather",
 }
 
 # Convert dictionary keys to a list
@@ -81,10 +89,10 @@ if __name__ == "__main__":
         'environment',
         'crowd information',
         'current scene',
-
+        "what is the weather like today?",
     ]
 
     # Testing all input cases
     for input_text in test_inputs:
-        similar_key, corresponding_value = find_most_similar_command(input_text, keys_list)
-        print(f"Input: '{input_text}'\nMapped to: '{corresponding_value}' (Key: '{similar_key}')\n")
+        corresponding_value = find_most_similar_command(input_text)
+        print(f"Input: '{input_text}'\nMapped to: '{corresponding_value}'\n")
