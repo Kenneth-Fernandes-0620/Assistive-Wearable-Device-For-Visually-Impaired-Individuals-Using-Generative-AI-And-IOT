@@ -1,3 +1,4 @@
+import os
 import requests
 from gps import dms_to_dd, load_gps, get_gps
 
@@ -7,18 +8,25 @@ BASE_WEATHER_URL = "http://api.weatherapi.com/v1"
 CURRENT_WEATHER_URL = BASE_WEATHER_URL + "/current.json"
 
 def discover_server():
+    """
+    Discover an available server from a list of URLs.
+    
+    :return: URL of the available server
+    :raises Exception: If no servers are found
+    """
     for url in URLS:
         try:
             response = requests.get(url)
             if response.status_code == 200:
                 print(f"Server found at {url}")
                 return url
-        except:
-            pass
-    raise Exception("No servers found, Check your internet connection and try again")
+        except requests.exceptions.RequestException as e:
+            print(f"Server not reachable at {url}, Error: {e}")
+            continue
+    raise Exception("No servers found. Check your internet connection and try again.")
 
+# Discover available server
 URL = discover_server()
-load_gps()
 
 def upload_image(image, prompt="caption en", id="test_id"):
     response = requests.post(URL + "process_image", files={"image": image}, data={
