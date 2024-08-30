@@ -69,7 +69,9 @@ def image_processing_worker():
                 message: str = messageQueue.get()
                 if message == commands[0]:
                     # Describe Environment
+                    print("Test: Describe Environment")
                     success, image = get_image_from_webcam()
+                    print("Got image: ", success)
                     if not success:
                         logQueue.put(
                             ("Unable to capture image from camera", logging.ERROR)

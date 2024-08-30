@@ -1,6 +1,6 @@
 from cv2 import VideoCapture, QRCodeDetector, cvtColor, imencode, IMWRITE_JPEG_QUALITY, COLOR_BGR2GRAY
 
-video_capture: VideoCapture = None
+# video_capture: VideoCapture = None
 
 # TODO: Add Documentation
 def load_image_capture():
@@ -28,10 +28,10 @@ def get_image_from_webcam():
 
 def free_image_capture():
     """Releases the video capture object."""
-    global video_capture
-    if video_capture is not None:
-        video_capture.release()
-        video_capture = None
+    # global video_capture
+    # if video_capture is not None:
+    #     video_capture.release()
+    #     video_capture = None
 
 
 

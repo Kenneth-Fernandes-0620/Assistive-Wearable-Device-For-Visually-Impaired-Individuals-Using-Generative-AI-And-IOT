@@ -3,12 +3,12 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 # Your dictionary
 prompts = {
-    "Describe the environment": "Describe the environment", 
-    "Explain the current scene": "Describe the environment",
-    "Tell me what is happening around me": "Describe the environment",
-    "What do you see?": "Describe the environment",
-    "Can you describe the surroundings?": "Describe the environment",
-    "what can i see": "Describe the environment",
+    "Describe the environment": "describe environment", 
+    "Explain the current scene": "describe environment",
+    "Tell me what is happening around me": "describe environment",
+    "What do you see?": "describe environment",
+    "Can you describe the surroundings?": "describe environment",
+    "what can i see": "describe environment",
 
     "Emergency situation": "SOS",
     "I need assistance": "SOS",
