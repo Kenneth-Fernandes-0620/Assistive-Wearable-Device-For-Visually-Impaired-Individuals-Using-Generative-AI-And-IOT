@@ -5,14 +5,14 @@ video_capture: VideoCapture = None
 # TODO: Add Documentation
 def load_image_capture():
     global video_capture
-    video_capture = VideoCapture(0)
-    video_capture.read() # initial read to get the camera started
+    # video_capture = VideoCapture(0)
+    # video_capture.read() # initial read to get the camera started
 
 
 # TODO: Add Documentation
 def get_image_from_webcam():
-    global video_capture
-
+    # global video_capture
+    video_capture = VideoCapture(0)
     print("Getting image from webcam")
 
     if video_capture is None:
@@ -22,8 +22,7 @@ def get_image_from_webcam():
     if not ret:
         raise Exception("Unable to capture image from camera")
     
-    free_image_capture()
-    load_image_capture()
+    video_capture.release()
     return imencode(".jpg", frame, [IMWRITE_JPEG_QUALITY, 90])
 
 
