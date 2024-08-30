@@ -206,6 +206,7 @@ def speech_processing_worker():
                     command = find_most_similar_command(result)
                     print(f"Command: {command}")
                     if command is not None:
+                        print("Waiting...")
                         resultQueue.put("I have received the command to " + command)
                         messageQueue.put(command)
                         logQueue.put(("Message received from user.", logging.INFO))
