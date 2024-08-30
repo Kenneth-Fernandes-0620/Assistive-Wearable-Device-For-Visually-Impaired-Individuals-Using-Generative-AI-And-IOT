@@ -17,18 +17,15 @@ prompts = {
     "This is an emergency": "SOS",
     "Help me now": "SOS",
     "Can you trigger an SOS?": "SOS",
-
     "I need help": "help",
     "I require assistance": "help",
     "Support needed": "help",
     "Help me out": "help",
-
     "Set up the system": "setup",
     "Initialize the setup": "setup",
     "Begin the installation process": "setup",
     "What are the setup steps?": "setup",
     "How to start setup?": "setup",
-
     "Is there a crowd detected?": "detect crowd",
     "Can you see a crowd?": "detect crowd",
     "Are there many people around?": "detect crowd",
@@ -36,7 +33,6 @@ prompts = {
     "Crowd detection needed": "detect crowd",
     "Is the area crowded?": "detect crowd",
     "Do you see any group of people?": "detect crowd",
-
     "Terminate program": "exit",
     "Close the application": "exit",
     "Shut down the system": "exit",
@@ -54,6 +50,7 @@ prompts = {
 
 # Convert dictionary keys to a list
 keys_list = list(prompts.keys())
+
 
 # Define a function to find the most similar key
 def find_most_similar_command(input_text):

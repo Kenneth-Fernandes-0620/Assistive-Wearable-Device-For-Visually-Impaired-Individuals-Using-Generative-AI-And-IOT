@@ -79,7 +79,7 @@ def load_gps():
         was_gps_loaded = False
         pass
 
-
+# sudo cat /dev/ttyAMA0
 def get_gps():
     if not was_gps_loaded:
         return f"12°56'03.2\"N 77°36'21.1\"E"

@@ -37,6 +37,7 @@ commands: List[str] = [
 
 delay = 0
 
+
 def startup_worker():
     global messageQueue, resultQueue, isRunning, isWaiting, logQueue
 
@@ -206,9 +207,10 @@ def speech_processing_worker():
                 if result:
                     print(f"I heard: {result}")
                     # command = find_most_similar_command(result)
-                    command = match_command(result)
+                    command = find_most_similar_command(result)
                     print(f"Command: {command}")
                     if command is not None:
+                        print("Waiting...")
                         resultQueue.put("I have received the command to " + command)
                         messageQueue.put(command)
                         logQueue.put(("Message received from user.", logging.INFO))
