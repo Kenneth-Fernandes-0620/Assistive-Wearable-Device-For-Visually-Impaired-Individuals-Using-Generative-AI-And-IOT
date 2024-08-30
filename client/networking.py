@@ -83,10 +83,18 @@ def getWeather(location: str):
     print(f"Hitting Api: {CURRENT_WEATHER_URL} with data {location}")
     response = requests.get(CURRENT_WEATHER_URL, params={"q": location, "key": WEATHER_API_KEY})
     if response.status_code == 200:
-        print(f"Weather at {location}: {response.json()}")
+        # print(f"Weather at {location}: {response.json()}")/
+        pass
     else:
         print(f"Error: Status code {response.status_code} as {response.text}")
-    return response
+    data:dict = response.json()
+    current = data.get('current')
+
+    condition = current.get('condition') if current else None
+
+    humidity = current.get('humidity') if current else None
+    feelslike_c = current.get('feelslike_c') if current else None
+    return f"Humidity is {humidity}%, {condition.get('text')}, Feels like {feelslike_c} °C"
 
 def process_images_in_folder(
     folder_path, prompt="caption en", gps="0,0", user_id="test_id"
@@ -153,4 +161,4 @@ def main():
 
 if __name__ == "__main__":
     print("Testing weather API")
-    getWeather(dms_to_dd(get_gps()))
+    print(getWeather(dms_to_dd(get_gps())))

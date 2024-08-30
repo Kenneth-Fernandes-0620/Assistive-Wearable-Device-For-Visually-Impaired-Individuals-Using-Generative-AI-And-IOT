@@ -126,20 +126,6 @@ def image_processing_worker():
                         response_json = response.json()
                         detections = response_json.get("caption", [])
                         print("detected: ", detections)
-
-                        # if is_crowd(detections):
-                        #     person_count = len(detections)
-                        #     if person_count > 4:
-                        #         resultQueue.put(
-                        #             f"Crowd detected with {person_count} persons"
-                        #         )
-                        #     else:
-                        #         resultQueue.put(
-                        #             f"Crowd detected but less than 5 persons: {person_count}"
-                        #         )
-                        # else:
-                        #     resultQueue.put(f"Number of Person: {len(detections)}")
-
                         logQueue.put(
                             (f"Received response: {response_json}", logging.INFO)
                         )

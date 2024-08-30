@@ -1,12 +1,15 @@
+from threading import Thread
+import time
 from cv2 import VideoCapture, QRCodeDetector, cvtColor, imencode, IMWRITE_JPEG_QUALITY, COLOR_BGR2GRAY
 
 # video_capture: VideoCapture = None
 
 # TODO: Add Documentation
 def load_image_capture():
-    global video_capture
+    # global video_capture
     # video_capture = VideoCapture(0)
     # video_capture.read() # initial read to get the camera started
+    pass
 
 
 # TODO: Add Documentation
@@ -18,6 +21,8 @@ def get_image_from_webcam():
     if video_capture is None:
             raise Exception("Video capture is not initialized. Call load_image_capture first.")
 
+    video_capture.read() # initial read to get the camera started
+    time.sleep(1)
     ret, frame = video_capture.read()
     if not ret:
         raise Exception("Unable to capture image from camera")
