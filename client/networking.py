@@ -2,10 +2,14 @@ import os
 import requests
 from gps import dms_to_dd, load_gps, get_gps
 
-URLS = ["https://desktop-gvg2hfa.tail23d4c9.ts.net/","https://laptop-7dmbbhmj.tail23d4c9.ts.net/"]
+URLS = [
+    "https://desktop-gvg2hfa.tail23d4c9.ts.net/",
+    "https://laptop-7dmbbhmj.tail23d4c9.ts.net/",
+]
 WEATHER_API_KEY = "9f8fa3a83ebf44daa41131159242908"
 BASE_WEATHER_URL = "http://api.weatherapi.com/v1"
 CURRENT_WEATHER_URL = BASE_WEATHER_URL + "/current.json"
+
 
 def discover_server():
     """
@@ -79,22 +83,29 @@ def upload_image_test(image_path, prompt="caption en", gps="0,0", user_id="test_
             )
             return None
 
-def getWeather(location: str):
+
+def getWeather(location: str = dms_to_dd(get_gps())):
     print(f"Hitting Api: {CURRENT_WEATHER_URL} with data {location}")
-    response = requests.get(CURRENT_WEATHER_URL, params={"q": location, "key": WEATHER_API_KEY})
+    response = requests.get(
+        CURRENT_WEATHER_URL, params={"q": location, "key": WEATHER_API_KEY}
+    )
     if response.status_code == 200:
         # print(f"Weather at {location}: {response.json()}")/
         pass
     else:
         print(f"Error: Status code {response.status_code} as {response.text}")
-    data:dict = response.json()
-    current = data.get('current')
+        return "Error fetching weather data"
+    data: dict = response.json()
+    current = data.get("current")
 
-    condition = current.get('condition') if current else None
+    condition = current.get("condition") if current else None
 
-    humidity = current.get('humidity') if current else None
-    feelslike_c = current.get('feelslike_c') if current else None
-    return f"Humidity is {humidity}%, {condition.get('text')}, Feels like {feelslike_c} °C"
+    humidity = current.get("humidity") if current else None
+    feelslike_c = current.get("feelslike_c") if current else None
+    return (
+        f"Humidity is {humidity}%, {condition.get('text')}, Feels like {feelslike_c} °C"
+    )
+
 
 def process_images_in_folder(
     folder_path, prompt="caption en", gps="0,0", user_id="test_id"
@@ -149,15 +160,18 @@ def main():
     else:
         print("Invalid choice. Exiting.")
         return
-    
+
     if not os.path.isdir(folder_path):
         print(f"Folder not found: {folder_path}")
         return
-    
-    all_responses = process_images_in_folder(folder_path, prompt=custom_prompt, gps=manual_gps, user_id=user_id)
-    
+
+    all_responses = process_images_in_folder(
+        folder_path, prompt=custom_prompt, gps=manual_gps, user_id=user_id
+    )
+
     for image_name, caption in all_responses:
         print(f"Image: {image_name}, Caption: {caption}")
+
 
 if __name__ == "__main__":
     print("Testing weather API")

@@ -14,7 +14,7 @@ from image_processing import (
     load_image_capture,
     get_QRCode_from_webcam,
 )
-from networking import upload_image
+from networking import getWeather, upload_image
 from similarity_processing import find_most_similar_command
 
 messageQueue: Queue = None
@@ -143,9 +143,8 @@ def image_processing_worker():
                     isRunning = False
 
                 elif message == commands[6]:
-                    # Weather
-                    resultQueue.put("Sorry, I am unable to provide weather updates at this time")
-                    raise Exception("Unimplemented command: Weather")
+                    result = getWeather()
+                    resultQueue.put(result)
                 isWaiting = False
             else:
                 time.sleep(0.5)
