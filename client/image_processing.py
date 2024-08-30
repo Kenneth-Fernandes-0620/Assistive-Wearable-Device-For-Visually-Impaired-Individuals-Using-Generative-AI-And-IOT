@@ -12,14 +12,28 @@ def load_image_capture():
 # TODO: Add Documentation
 def get_image_from_webcam():
     global video_capture
+
+    print("Getting image from webcam")
+
+    if video_capture is None:
+            raise Exception("Video capture is not initialized. Call load_image_capture first.")
+
     ret, frame = video_capture.read()
     if not ret:
         raise Exception("Unable to capture image from camera")
+    
+    free_image_capture()
+    load_image_capture()
     return imencode(".jpg", frame, [IMWRITE_JPEG_QUALITY, 90])
 
 
-def free_video_capture():
-    video_capture.release()
+def free_image_capture():
+    """Releases the video capture object."""
+    global video_capture
+    if video_capture is not None:
+        video_capture.release()
+        video_capture = None
+
 
 
 def list_cameras():
