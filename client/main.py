@@ -9,7 +9,7 @@ import difflib
 from audio_processing import capture_speech, load_speech_capture, SpeakText
 from util import load_logger
 from image_processing import (
-    free_video_capture,
+    free_image_capture,
     get_image_from_webcam,
     load_image_capture,
     get_QRCode_from_webcam,
@@ -77,7 +77,7 @@ def image_processing_worker():
                     else:
                         logQueue.put(("Captured image from camera", logging.INFO))
                     try:
-                        response = upload_image(image, "Describe the contents of Image in English")
+                        response = upload_image(image, "Describe the contents of the Image in English")
                         resultQueue.put(response.json()["caption"])
                         logQueue.put(
                             (
@@ -164,7 +164,7 @@ def image_processing_worker():
         print(e.args[0])
         logQueue.put((f"Error in image processing worker: {e.args[0]}", logging.ERROR))
         isRunning = False
-    free_video_capture()
+    free_image_capture()
 
 
 def audio_processing_worker():
