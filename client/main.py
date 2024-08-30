@@ -36,6 +36,7 @@ commands: List[str] = [
 
 delay = 0
 
+
 def startup_worker():
     global messageQueue, resultQueue, isRunning, isWaiting, logQueue
 
@@ -76,7 +77,9 @@ def image_processing_worker():
                     else:
                         logQueue.put(("Captured image from camera", logging.INFO))
                     try:
-                        response = upload_image(image, "Describe the contents of Image in English")
+                        response = upload_image(
+                            image, "Describe the contents of Image in English"
+                        )
                         resultQueue.put(response.json()["caption"])
                         logQueue.put(
                             (
@@ -200,7 +203,7 @@ def speech_processing_worker():
                 if result:
                     print(f"I heard: {result}")
                     # command = find_most_similar_command(result)
-                    command = match_command(result)
+                    command = find_most_similar_command(result)
                     print(f"Command: {command}")
                     if command is not None:
                         resultQueue.put("I have received the command to " + command)
