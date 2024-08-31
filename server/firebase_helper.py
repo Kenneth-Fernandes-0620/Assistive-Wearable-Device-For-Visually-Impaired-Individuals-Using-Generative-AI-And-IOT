@@ -1,5 +1,5 @@
 import os
-from firebase_admin import credentials, firestore, initialize_app
+from firebase_admin import credentials, firestore, initialize_app, messaging
 
 
 def load_firebase_credentials():
@@ -9,6 +9,24 @@ def load_firebase_credentials():
     # Initialize the Firebase Admin SDK using the parsed credentials
     cred = credentials.Certificate(firebase_credentials_path)
     initialize_app(cred)
+
+def send_message_to_topic(topic, title, body, uid = 'Byi1c2jSuMXSsH958F1ch3TbnLD3'):
+
+    # Define the message payload
+    message = messaging.Message(
+        data={
+            'uid':uid
+        },
+        topic=topic
+    )
+
+    try:
+        # Send the message
+        response = messaging.send(message)
+        print(f'Successfully sent message to topic "{topic}": {response}')
+    except Exception as e:
+        print(f'Error sending message: {e}')
+
 
 
 load_firebase_credentials()

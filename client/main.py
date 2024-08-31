@@ -14,7 +14,7 @@ from image_processing import (
     load_image_capture,
     get_QRCode_from_webcam,
 )
-from networking import getWeather, upload_image
+from networking import getWeather, notifyHelp, upload_image
 from similarity_processing import find_most_similar_command
 
 messageQueue: Queue = None
@@ -36,7 +36,7 @@ commands: List[str] = [
 ]
 
 delay = 0
-
+account_id = "Byi1c2jSuMXSsH958F1ch3TbnLD3"
 
 def startup_worker():
     global messageQueue, resultQueue, isRunning, isWaiting, logQueue
@@ -97,11 +97,11 @@ def image_processing_worker():
                         )
                 elif message == commands[1] or message == commands[2]:
                     # SOS Signal
+                    notifyHelp(account_id)
                     logQueue.put(("Sending SOS signal...", logging.INFO))
                     resultQueue.put(
                         "Sorry, I am unable to send SOS signals at this time"
                     )
-                    raise Exception("Unimplemented command: SOS or help")
 
                 elif message == commands[3]:
                     # Setup device

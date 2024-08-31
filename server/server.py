@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import os
 
-from firebase_helper import send_document_to_firestore
+from firebase_helper import send_document_to_firestore, send_message_to_topic
 from server_image_processing import image_captioning, model_load
 
 
@@ -71,6 +71,17 @@ def process_image():
         if uid != "":
             send_document_to_firestore("errors", {"uid": uid, "prompt": prompt, "error": f"Error processing image: {e}"})
         return jsonify({"error": "Internal server error"}), 500
+
+
+@app.route("/help", methods=["GET"])
+def help():
+    uid = request.args.get("id", "")
+
+    if uid == "":
+        return jsonify({"error": "No user ID provided"}), 400
+
+    send_message_to_topic("help", "Help", "Someone needs help!", uid)
+    return "Help message sent!", 200
 
 
 if __name__ == "__main__":

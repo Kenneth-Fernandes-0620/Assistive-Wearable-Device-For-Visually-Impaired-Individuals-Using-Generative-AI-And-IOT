@@ -83,6 +83,13 @@ def upload_image_test(image_path, prompt="caption en", gps="0,0", user_id="test_
             )
             return None
 
+def notifyHelp(uid: str = ""):
+    response = requests.get(URL + "help",params={"id": uid})
+    if response.status_code == 200:
+        print("Help requested successfully!")
+    else:
+        print(f"Error: Status code {response.status_code} as {response.text}")
+    return response
 
 def getWeather(location: str = dms_to_dd(get_gps())):
     print(f"Hitting Api: {CURRENT_WEATHER_URL} with data {location}")
